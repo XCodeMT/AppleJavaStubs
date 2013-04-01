@@ -1,0 +1,39 @@
+<project name="AppleJavaStubs" default="dist" basedir=".">
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="name"  value="AppleJavaStubs"/>
+  <property name="author"  value="XCodeMT"/>
+ 
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${build}"/>
+  </target>
+ 
+  <target name="compile" depends="init" >
+    <javac srcdir="${src}" destdir="${build}">
+      <classpath>
+        <!-- add your necessary jars here -->
+        <!-- <pathelement location="lib/commons-io-2.4.jar"/> -->
+      </classpath>
+    </javac>
+  </target>
+ 
+  <target name="dist" depends="compile" >
+    <mkdir dir="${dist}"/>
+    <jar jarfile="${dist}/${name}.jar" basedir="${build}">
+      <fileset dir="${build}" />
+      <fileset dir="${src}" includes="**/*.java"/>
+      <manifest>
+        <attribute name="Built-By" value="${author}"/>
+      </manifest>
+    </jar>
+  </target>
+ 
+  <target name="clean" >
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+ 
+  <target name="build" depends="clean, dist"/>
+</project>
